@@ -34,7 +34,7 @@ import util.Utils
  * desc: 更新弹窗
  */
 internal class UpdateAppActivity : AppCompatActivity() {
-
+    private var tvPackageSize: TextView? = null
     private var tvTitle: TextView? = null
     private var tvContent: TextView? = null
     private var sureBtn: View? = null
@@ -80,13 +80,14 @@ internal class UpdateAppActivity : AppCompatActivity() {
 
     @SuppressLint("ClickableViewAccessibility")
     private fun initView() {
-
+        tvPackageSize = findViewById(R.id.tv_package_size)
         tvTitle = findViewById(R.id.tv_update_title)
         tvContent = findViewById(R.id.tv_update_content)
         cancelBtn = findViewById(R.id.btn_update_cancel)
         sureBtn = findViewById(R.id.btn_update_sure)
         ivLogo = findViewById(R.id.iv_update_logo)
-
+        //包大小
+        tvPackageSize?.text = updateInfo.packageSize
         // 更新标题
         tvTitle?.text = updateInfo.updateTitle
 

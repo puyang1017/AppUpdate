@@ -48,6 +48,14 @@ object UpdateAppUtils {
     }
 
     /**
+     * 设置包大小
+     */
+    fun updatePackageSize(size: String): UpdateAppUtils {
+        updateInfo.packageSize = size
+        return this
+    }
+
+    /**
      * 设置更新标题
      */
     fun updateTitle(title: CharSequence): UpdateAppUtils {
@@ -139,6 +147,7 @@ object UpdateAppUtils {
      */
     fun deleteInstalledApk() {
         val apkPath = SPUtil.getString(DownloadAppUtils.KEY_OF_SP_APK_PATH, "")
+        log("deleteInstalledApk:$apkPath")
         val appVersionCode = Utils.getAPPVersionCode()
         val apkVersionCode = Utils.getApkVersionCode(apkPath)
         log("appVersionCode:$appVersionCode")

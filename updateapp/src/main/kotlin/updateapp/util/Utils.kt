@@ -113,12 +113,13 @@ internal object Utils {
      * 删除文件
      */
     fun deleteFile(filePath: String?) {
+        log("deleteFile filePath:$filePath")
         if (filePath == null) {
             return
         }
         val file = File(filePath)
         try {
-            (file.isFile).yes {
+            (file.exists()).yes {
                 file.delete()
                 log("删除成功")
             }

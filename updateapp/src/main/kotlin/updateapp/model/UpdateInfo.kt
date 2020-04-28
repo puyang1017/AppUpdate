@@ -7,6 +7,8 @@ import util.GlobalContextProvider
  * desc: UpdateInfo
  */
 internal data class UpdateInfo(
+    //包大小
+    var packageSize: String = "",
     // 更新标题
     var updateTitle: CharSequence = GlobalContextProvider.getGlobalContext().getString(R.string.update_title),
     // 更新内容

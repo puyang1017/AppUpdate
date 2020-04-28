@@ -15,15 +15,18 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        UpdateAppUtils.getInstance().deleteInstalledApk()
         UpdateAppUtils
             .getInstance()
             .apkUrl("https://www.biubiu001.com/apk-download?platform=pc")
+            .updatePackageSize("55MB")
             .updateTitle("2222")
             .updateContent("23sdfsdjkvjks\ndvjksvksnlkvn")
             .updateConfig(UpdateConfig().apply {
                 downloadBy = DownLoadBy.APP
                 isShowNotification = true
                 serverVersionName = "2.0.0"
+                apkSavePath = externalCacheDir.absolutePath
             })
             .uiConfig(UiConfig(uiType = UiType.PLENTIFUL))
 

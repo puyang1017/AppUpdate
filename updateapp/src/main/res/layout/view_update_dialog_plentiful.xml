@@ -30,6 +30,18 @@
         app:layout_constraintTop_toBottomOf="@+id/iv_update_logo"
         tools:text="版本更新啦!"/>
 
+    <TextView
+        android:id="@+id/tv_package_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/text_title"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_update_title"
+        tools:text="12MB"/>
+
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
@@ -38,7 +50,7 @@
         android:overScrollMode="never"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_update_title">
+        app:layout_constraintTop_toBottomOf="@+id/tv_package_size">
 
         <TextView
             android:id="@+id/tv_update_content"
