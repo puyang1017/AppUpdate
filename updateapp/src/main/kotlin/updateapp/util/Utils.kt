@@ -86,9 +86,15 @@ internal object Utils {
      * 获取apk versioncode
      */
     fun getApkVersionCode(apkPath: String): Int {
+
         val pm = getApp().applicationContext.packageManager
         return try {
-            pm.getPackageArchiveInfo(apkPath, PackageManager.GET_ACTIVITIES).versionCode
+            val file = File(apkPath)
+            if(file.exists()){
+                pm.getPackageArchiveInfo(apkPath, PackageManager.GET_ACTIVITIES).versionCode
+            }else{
+                -1
+            }
         } catch (e: java.lang.Exception) {
             -1
         }
