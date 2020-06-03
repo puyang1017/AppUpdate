@@ -105,7 +105,12 @@ internal class UpdateAppActivity : AppCompatActivity() {
 
         // 确定
         sureBtn?.setOnClickListener {
-
+            DownloadAppUtils.isDownloading.yes {
+                (updateConfig.showDownloadingToast).yes {
+                    Toast.makeText(this, uiConfig.downloadingBtnText, Toast.LENGTH_SHORT).show()
+                }
+                finish()
+            }
             DownloadAppUtils.isDownloading.no {
                 if (sureBtn is TextView) {
                     (sureBtn as? TextView)?.text = uiConfig.updateBtnText
