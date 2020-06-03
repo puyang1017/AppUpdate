@@ -109,7 +109,9 @@ internal class UpdateAppActivity : AppCompatActivity() {
                 (updateConfig.showDownloadingToast).yes {
                     Toast.makeText(this, uiConfig.downloadingBtnText, Toast.LENGTH_SHORT).show()
                 }
-                finish()
+                (!updateConfig.force).yes {
+                    finish()
+                }
             }
             DownloadAppUtils.isDownloading.no {
                 if (sureBtn is TextView) {
