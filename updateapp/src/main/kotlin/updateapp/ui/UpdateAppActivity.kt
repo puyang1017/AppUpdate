@@ -130,12 +130,7 @@ internal class UpdateAppActivity : AppCompatActivity() {
         cancelBtn?.setOnTouchListener { v, event ->
             when (event.action) {
                 MotionEvent.ACTION_UP -> {
-                    if(UpdateAppUtils.onCancelBtnClickListener?.onClick()!!){
-                        finish()
-                        true
-                    }else{
-                        false
-                    }
+                    UpdateAppUtils.onCancelBtnClickListener?.onClick() ?: false
                 }
                 else -> false
             }
