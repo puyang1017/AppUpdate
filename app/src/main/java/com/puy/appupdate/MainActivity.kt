@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
             .setCancelBtnClickListener(object : OnBtnClickListener {
                 override fun onClick(): Boolean {
                     Toast.makeText(this@MainActivity, "cancel btn click", Toast.LENGTH_SHORT).show()
-                    return false // 事件是否消费，是否需要传递下去。false-会执行原有点击逻辑，true-只执行本次设置的点击逻辑
+                    return true // 事件是否消费，是否需要传递下去。false-会执行原有点击逻辑，true-只执行本次设置的点击逻辑
                 }
             })
 
@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
             .setUpdateBtnClickListener(object : OnBtnClickListener {
                 override fun onClick(): Boolean {
                     Toast.makeText(this@MainActivity, "update btn click", Toast.LENGTH_SHORT).show()
-                    return false // 事件是否消费，是否需要传递下去。false-会执行原有点击逻辑，true-只执行本次设置的点击逻辑
+                    return true // 事件是否消费，是否需要传递下去。false-会执行原有点击逻辑，true-只执行本次设置的点击逻辑
                 }
             })
 
