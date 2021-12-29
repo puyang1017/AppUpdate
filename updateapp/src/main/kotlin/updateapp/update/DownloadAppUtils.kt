@@ -92,7 +92,7 @@ internal object DownloadAppUtils {
             filePath = updateInfo.config.apkSavePath
         }.no {
             val packageName = context.packageName
-            filePath = Environment.getExternalStorageDirectory().absolutePath + "/" + packageName
+            filePath = context.externalCacheDir.path + "/"
         }
 
         // apk 保存名称

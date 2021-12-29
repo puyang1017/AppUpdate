@@ -189,18 +189,19 @@ internal class UpdateAppActivity : AppCompatActivity() {
      * 预备下载 进行 6.0权限检查
      */
     private fun preDownLoad() {
+        download()
         // 6.0 以下不用动态权限申请
-        (Build.VERSION.SDK_INT < Build.VERSION_CODES.M).yes {
-            download()
-        }.no {
-            val writePermission = ContextCompat.checkSelfPermission(this, permission)
-            (writePermission == PackageManager.PERMISSION_GRANTED).yes {
-                download()
-            }.no {
-                // 申请权限
-                ActivityCompat.requestPermissions(this, arrayOf(permission), PERMISSION_CODE)
-            }
-        }
+//        (Build.VERSION.SDK_INT < Build.VERSION_CODES.M).yes {
+//            download()
+//        }.no {
+//            val writePermission = ContextCompat.checkSelfPermission(this, permission)
+//            (writePermission == PackageManager.PERMISSION_GRANTED).yes {
+//                download()
+//            }.no {
+//                // 申请权限
+//                ActivityCompat.requestPermissions(this, arrayOf(permission), PERMISSION_CODE)
+//            }
+//        }
     }
 
     /**
