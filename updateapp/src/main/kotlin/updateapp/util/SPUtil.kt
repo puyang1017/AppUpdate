@@ -74,7 +74,7 @@ internal object SPUtil {
         return sharedPreferences.getFloat(keyName, defaultValue)
     }
 
-    fun getString(keyName: String, defaultValue: String? = null): String {
+    fun getString(keyName: String, defaultValue: String? = null): String? {
         val sharedPreferences = getSp()
         return sharedPreferences.getString(keyName, defaultValue)
     }

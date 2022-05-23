@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
         UpdateAppUtils.getInstance().deleteInstalledApk()
         UpdateAppUtils
             .getInstance()
-            .apkUrl("https://www.biubiu001.com/apk-download?platform=pc")
+            .apkUrl("https://appdownload.qiyou.cn/upload/20220516222139/app_version/qyOtherChannelApp_aligned_0516_1840_signed_QEEYOU.apk")
             .updatePackageSize("55MB")
             .updateTitle("2222")
             .updateContent("23sdfsdjkvjks\ndvjksvksnlkvn")
@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
                 downloadBy = DownLoadBy.APP
                 isShowNotification = true
                 serverVersionName = "2.0.0"
-                apkSavePath = externalCacheDir.absolutePath
+                apkSavePath = externalCacheDir?.absolutePath!!
             })
             .uiConfig(UiConfig(uiType = UiType.PLENTIFUL))
 
@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
             .setCancelBtnClickListener(object : OnBtnClickListener {
                 override fun onClick(): Boolean {
                     Toast.makeText(this@MainActivity, "cancel btn click", Toast.LENGTH_SHORT).show()
-                    return true // 事件是否消费，是否需要传递下去。false-会执行原有点击逻辑，true-只执行本次设置的点击逻辑
+                    return false // 事件是否消费，是否需要传递下去。false-会执行原有点击逻辑，true-只执行本次设置的点击逻辑
                 }
             })
 
@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
             .setUpdateBtnClickListener(object : OnBtnClickListener {
                 override fun onClick(): Boolean {
                     Toast.makeText(this@MainActivity, "update btn click", Toast.LENGTH_SHORT).show()
-                    return true // 事件是否消费，是否需要传递下去。false-会执行原有点击逻辑，true-只执行本次设置的点击逻辑
+                    return false // 事件是否消费，是否需要传递下去。false-会执行原有点击逻辑，true-只执行本次设置的点击逻辑
                 }
             })
 

@@ -16,7 +16,7 @@ val Any.TAG: String
  */
 fun Any.log(content: String?) {
     UpdateAppUtils.updateInfo.config.isDebug.yes {
-        Log.e("[UpdateAppUtils]", content)
+        content?.let { Log.e("[UpdateAppUtils]", it) }
     }
 }
 

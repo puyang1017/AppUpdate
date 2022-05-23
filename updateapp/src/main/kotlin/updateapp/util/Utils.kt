@@ -91,7 +91,7 @@ internal object Utils {
         return try {
             val file = File(apkPath)
             if(file.exists()){
-                pm.getPackageArchiveInfo(apkPath, PackageManager.GET_ACTIVITIES).versionCode
+                pm.getPackageArchiveInfo(apkPath, PackageManager.GET_ACTIVITIES)?.versionCode!!
             }else{
                 -1
             }

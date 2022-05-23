@@ -149,10 +149,10 @@ object UpdateAppUtils {
         val apkPath = SPUtil.getString(DownloadAppUtils.KEY_OF_SP_APK_PATH, "")
         log("deleteInstalledApk:$apkPath")
         val appVersionCode = Utils.getAPPVersionCode()
-        val apkVersionCode = Utils.getApkVersionCode(apkPath)
+        val apkVersionCode = apkPath?.let { Utils.getApkVersionCode(it) }
         log("appVersionCode:$appVersionCode")
         log("apkVersionCode:$apkVersionCode")
-        (apkPath.isNotEmpty() && appVersionCode == apkVersionCode && apkVersionCode > 0).yes {
+        (apkPath.isNullOrEmpty() && appVersionCode == apkVersionCode && apkVersionCode > 0).yes {
             Utils.deleteFile(apkPath)
         }
     }
