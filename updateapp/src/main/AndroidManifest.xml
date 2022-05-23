@@ -13,8 +13,6 @@
 
     <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
 
-    <uses-permission android:name="android.permission.RESTART_PACKAGES" />
-
     <application
         android:networkSecurityConfig="@xml/network_security_config"
         tools:ignore="UnusedAttribute">
