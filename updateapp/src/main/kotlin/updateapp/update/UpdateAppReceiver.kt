@@ -55,7 +55,7 @@ internal class UpdateAppReceiver : BroadcastReceiver() {
 
             // 重新下载
             context.packageName + ACTION_RE_DOWNLOAD -> {
-                DownloadAppUtils.reDownload()
+                DownloadAppUtils.reDownload(uiConfig.closeFileDownload)
             }
         }
     }

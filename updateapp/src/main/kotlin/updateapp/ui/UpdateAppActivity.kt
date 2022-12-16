@@ -260,7 +260,7 @@ internal class UpdateAppActivity : AppCompatActivity() {
             }
         }
 
-        DownloadAppUtils.download()
+        DownloadAppUtils.download(uiConfig.closeFileDownload)
 
         (updateConfig.showDownloadingToast).yes {
             Toast.makeText(this, uiConfig.downloadingToastText, Toast.LENGTH_SHORT).show()

@@ -33,6 +33,8 @@ data class UiConfig(
     var cancelBtnTextSize: Float? = null,
     var cancelBtnText: CharSequence = GlobalContextProvider.getGlobalContext().getString(R.string.update_cancel),
 
+    //关闭fileDownload库下载
+    var closeFileDownload:Boolean? = false,
     // 开始下载时的Toast提示文字
     var downloadingToastText: CharSequence = GlobalContextProvider.getGlobalContext().getString(R.string.toast_download_apk),
     // 下载中 下载按钮以及通知栏标题前缀，进度自动拼接在后面

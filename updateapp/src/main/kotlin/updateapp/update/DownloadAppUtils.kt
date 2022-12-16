@@ -71,16 +71,15 @@ internal object DownloadAppUtils {
     /**
      * 出错后，点击重试
      */
-    fun reDownload() {
+    fun reDownload(closeThreeWayDownload:Boolean?) {
         onReDownload.invoke()
-        download()
+        download(closeThreeWayDownload)
     }
 
     /**
      * App下载APK包，下载完成后安装
      */
-    fun download() {
-
+    fun download(closeThreeWayDownload:Boolean?) {
         (Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED).no {
             log("没有SD卡")
             onError.invoke()
@@ -107,57 +106,60 @@ internal object DownloadAppUtils {
         downloadUpdateApkFilePath = apkLocalPath
 
         SPUtil.putBase(KEY_OF_SP_APK_PATH, downloadUpdateApkFilePath)
+        if (closeThreeWayDownload == true){//是否关闭三方下载库
+            downloadByHttpUrlConnection(filePath, apkName)
+        }else{
+            FileDownloader.setup(context)
 
-        FileDownloader.setup(context)
+            val downloadTask = FileDownloader.getImpl().create(updateInfo.apkUrl)
+                .setPath(apkLocalPath)
 
-        val downloadTask = FileDownloader.getImpl().create(updateInfo.apkUrl)
-            .setPath(apkLocalPath)
+            downloadTask
+                .addHeader("Accept-Encoding","identity")
+                .addHeader("User-Agent","Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2062.120 Safari/537.36")
+                .setListener(object : FileDownloadLargeFileListener() {
 
-        downloadTask
-            .addHeader("Accept-Encoding","identity")
-            .addHeader("User-Agent","Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2062.120 Safari/537.36")
-            .setListener(object : FileDownloadLargeFileListener() {
-
-                override fun pending(task: BaseDownloadTask, soFarBytes: Long, totalBytes: Long) {
-                    log("----使用FileDownloader下载-------")
-                    log("pending:soFarBytes($soFarBytes),totalBytes($totalBytes)")
-                    downloadStart()
-                    if(totalBytes < 0){
-                        downloadTask.pause()
+                    override fun pending(task: BaseDownloadTask, soFarBytes: Long, totalBytes: Long) {
+                        log("----使用FileDownloader下载-------")
+                        log("pending:soFarBytes($soFarBytes),totalBytes($totalBytes)")
+                        downloadStart()
+                        if(totalBytes < 0){
+                            downloadTask.pause()
+                        }
                     }
-                }
 
-                override fun progress(task: BaseDownloadTask, soFarBytes: Long, totalBytes: Long) {
-                    downloading(soFarBytes, totalBytes)
-                    if(totalBytes < 0){
-                        downloadTask.pause()
+                    override fun progress(task: BaseDownloadTask, soFarBytes: Long, totalBytes: Long) {
+                        downloading(soFarBytes, totalBytes)
+                        if(totalBytes < 0){
+                            downloadTask.pause()
+                        }
                     }
-                }
 
-                override fun paused(task: BaseDownloadTask, soFarBytes: Long, totalBytes: Long) {
-                    log("获取文件总长度失败出错，尝试HTTPURLConnection下载")
-                    Utils.deleteFile(downloadUpdateApkFilePath)
-                    Utils.deleteFile("$downloadUpdateApkFilePath.temp")
-                    downloadByHttpUrlConnection(filePath, apkName)
-                }
+                    override fun paused(task: BaseDownloadTask, soFarBytes: Long, totalBytes: Long) {
+                        log("获取文件总长度失败出错，尝试HTTPURLConnection下载")
+                        Utils.deleteFile(downloadUpdateApkFilePath)
+                        Utils.deleteFile("$downloadUpdateApkFilePath.temp")
+                        downloadByHttpUrlConnection(filePath, apkName)
+                    }
 
-                override fun completed(task: BaseDownloadTask) {
-                    downloadComplete()
-                }
+                    override fun completed(task: BaseDownloadTask) {
+                        downloadComplete()
+                    }
 
-                override fun error(task: BaseDownloadTask, e: Throwable) {
-                    // FileDownloader 下载失败后，再调用 FileDownloadUtil 下载一次
-                    // FileDownloader 对码云或者阿里云上的apk文件会下载失败
-                    // downloadError(e)
-                    log("下载出错，尝试HTTPURLConnection下载")
-                    Utils.deleteFile(downloadUpdateApkFilePath)
-                    Utils.deleteFile("$downloadUpdateApkFilePath.temp")
-                    downloadByHttpUrlConnection(filePath, apkName)
-                }
+                    override fun error(task: BaseDownloadTask, e: Throwable) {
+                        // FileDownloader 下载失败后，再调用 FileDownloadUtil 下载一次
+                        // FileDownloader 对码云或者阿里云上的apk文件会下载失败
+                        // downloadError(e)
+                        log("下载出错，尝试HTTPURLConnection下载")
+                        Utils.deleteFile(downloadUpdateApkFilePath)
+                        Utils.deleteFile("$downloadUpdateApkFilePath.temp")
+                        downloadByHttpUrlConnection(filePath, apkName)
+                    }
 
-                override fun warn(task: BaseDownloadTask) {
-                }
-            }).start()
+                    override fun warn(task: BaseDownloadTask) {
+                    }
+                }).start()
+        }
     }
 
     /**

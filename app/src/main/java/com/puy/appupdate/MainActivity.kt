@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
                 serverVersionName = "2.0.0"
                 apkSavePath = externalCacheDir?.absolutePath!!
             })
-            .uiConfig(UiConfig(uiType = UiType.PLENTIFUL))
+            .uiConfig(UiConfig(uiType = UiType.PLENTIFUL, closeFileDownload = false))
 
             // 设置 取消 按钮点击事件
             .setCancelBtnClickListener(object : OnBtnClickListener {
