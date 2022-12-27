@@ -118,7 +118,7 @@ internal class UpdateAppReceiver : BroadcastReceiver() {
         if (progress == -1000) {
             val intent = Intent(context.packageName + ACTION_RE_DOWNLOAD)
             intent.setPackage(context.packageName)
-            val pendingIntent = PendingIntent.getBroadcast(context, REQUEST_CODE, intent, PendingIntent.FLAG_CANCEL_CURRENT)
+            val pendingIntent = PendingIntent.getBroadcast(context, REQUEST_CODE, intent, if(Build.VERSION.SDK_INT >= 31) PendingIntent.FLAG_IMMUTABLE else PendingIntent.FLAG_CANCEL_CURRENT)
             builder.setContentIntent(pendingIntent)
             // 通知栏标题
             builder.setContentTitle(uiConfig.downloadFailText)
