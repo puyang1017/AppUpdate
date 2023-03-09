@@ -39,6 +39,11 @@ internal object DownloadAppUtils {
     private val context by lazy { GlobalContextProvider.getGlobalContext() }
 
     /**
+     * 是否在下载完成
+     */
+    var isDownloaded = false
+
+    /**
      * 是否在下载中
      */
     var isDownloading = false
@@ -182,6 +187,7 @@ internal object DownloadAppUtils {
      */
     private fun downloadStart() {
         isDownloading = true
+        isDownloaded = false
         UpdateAppUtils.downloadListener?.onStart()
         UpdateAppReceiver.send(context, 0)
     }
@@ -192,6 +198,7 @@ internal object DownloadAppUtils {
     private fun downloading(soFarBytes: Long, totalBytes: Long) {
 //        log("soFarBytes:$soFarBytes--totalBytes:$totalBytes")
         isDownloading = true
+        isDownloaded = false
         var progress = (soFarBytes * 100.0 / totalBytes).toInt()
         if (progress < 0) progress = 0
         log("progress:$progress")
@@ -204,6 +211,7 @@ internal object DownloadAppUtils {
      * 下载完成处理逻辑
      */
     private fun downloadComplete() {
+        isDownloaded = true
         isDownloading = false
         log("completed")
         this@DownloadAppUtils.onProgress.invoke(100)
@@ -221,6 +229,7 @@ internal object DownloadAppUtils {
      */
     private fun downloadError(e: Throwable) {
         isDownloading = false
+        isDownloaded = false
         log("error:${e.message}")
         Utils.deleteFile(downloadUpdateApkFilePath)
         this@DownloadAppUtils.onError.invoke()

@@ -105,6 +105,14 @@ internal class UpdateAppActivity : AppCompatActivity() {
 
         // 确定
         sureBtn?.setOnClickListener {
+            DownloadAppUtils.isDownloaded.yes {
+                // 安装apk
+                DownloadAppUtils.downloadUpdateApkFilePath.isNotEmpty().yes {
+                    Utils.installApk(this, DownloadAppUtils.downloadUpdateApkFilePath)
+                }
+                return@setOnClickListener
+            }
+
             DownloadAppUtils.isDownloading.yes {
                 (updateConfig.showDownloadingToast).yes {
                     Toast.makeText(this, uiConfig.downloadingBtnText, Toast.LENGTH_SHORT).show()

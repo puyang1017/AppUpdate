@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
             .updateConfig(UpdateConfig().apply {
                 downloadBy = DownLoadBy.APP
                 isShowNotification = true
+                alwaysShowDownLoadDialog = true
                 serverVersionName = "2.0.0"
                 apkSavePath = externalCacheDir?.absolutePath!!
             })
