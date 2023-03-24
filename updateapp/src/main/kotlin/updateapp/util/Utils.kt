@@ -12,6 +12,7 @@ import androidx.core.content.FileProvider
 import android.util.Log
 import extension.log
 import extension.yes
+import update.DownloadAppUtils
 import java.io.File
 
 
@@ -127,6 +128,7 @@ internal object Utils {
         try {
             (file.exists()).yes {
                 file.delete()
+                DownloadAppUtils.isDownloaded = false
                 log("删除成功")
             }
         } catch (e: Exception) {
