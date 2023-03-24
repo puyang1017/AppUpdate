@@ -152,7 +152,7 @@ object UpdateAppUtils {
         val apkVersionCode = apkPath?.let { Utils.getApkVersionCode(it) }
         log("appVersionCode:$appVersionCode")
         log("apkVersionCode:$apkVersionCode")
-        (apkPath.isNullOrEmpty()).yes {
+        (apkPath.isNullOrEmpty()).no {
             Utils.deleteFile(apkPath)
         }
     }
