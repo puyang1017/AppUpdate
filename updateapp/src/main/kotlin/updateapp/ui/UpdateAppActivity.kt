@@ -58,15 +58,19 @@ internal class UpdateAppActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (uiConfig.customLayoutView != null && uiConfig.uiType == UiType.CUSTOM) {
+            setContentView(uiConfig.customLayoutView)
+        } else {
+            setContentView(
+                when (uiConfig.uiType) {
+                    UiType.SIMPLE -> R.layout.view_update_dialog_simple
+                    UiType.PLENTIFUL -> R.layout.view_update_dialog_plentiful
+                    UiType.CUSTOM -> uiConfig.customLayoutId ?: R.layout.view_update_dialog_simple
+                    else -> R.layout.view_update_dialog_simple
+                }
+            )
+        }
 
-        setContentView(
-            when (uiConfig.uiType) {
-                UiType.SIMPLE -> R.layout.view_update_dialog_simple
-                UiType.PLENTIFUL -> R.layout.view_update_dialog_plentiful
-                UiType.CUSTOM -> uiConfig.customLayoutId ?: R.layout.view_update_dialog_simple
-                else -> R.layout.view_update_dialog_simple
-            }
-        )
         initView()
         initUi()
 
@@ -140,6 +144,7 @@ internal class UpdateAppActivity : AppCompatActivity() {
                 MotionEvent.ACTION_UP -> {
                     UpdateAppUtils.onCancelBtnClickListener?.onClick() ?: false
                 }
+
                 else -> false
             }
         }
@@ -150,6 +155,7 @@ internal class UpdateAppActivity : AppCompatActivity() {
                 MotionEvent.ACTION_UP -> {
                     UpdateAppUtils.onUpdateBtnClickListener?.onClick() ?: false
                 }
+
                 else -> false
             }
         }

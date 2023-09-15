@@ -1,5 +1,6 @@
 package model
 
+import android.view.View
 import com.puy.updateapp.R
 import constacne.UiType
 import util.GlobalContextProvider
@@ -12,6 +13,8 @@ data class UiConfig(
     var uiType: String = UiType.SIMPLE,
     // 自定义UI 布局id
     var customLayoutId: Int? = null,
+    // 自定义UI view
+    var customLayoutView: View? = null,
     // 更新弹窗中的logo
     var updateLogoImgRes: Int? = null,
     // 标题相关设置
