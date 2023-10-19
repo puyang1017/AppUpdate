@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">updateapp</string>
+
+    <string name="notice">فوري</string>
+    <string name="cancel">إلغاء الأمر</string>
+    <string name="sure">أكد</string>
+    <string name="update_now">التحديث الآن</string>
+    <string name="update_cancel">لم يتم التحديث بعد</string>
+    <string name="update_title">تم تحديث الإصدار!</string>
+    <string name="update_content">اكتشف الإصدارات الجديدة وقم بتحديثها الآن</string>
+    <string name="download_fail">حدث خطأ أثناء التنزيل، انقر فوق إعادة المحاولة</string>
+    <string name="toast_download_apk">تحديث التنزيل...</string>
+    <string name="downloading">تحميل</string>
+    <string name="no_storage_permission">"لا يوجد إذن تخزين ، سواء لفتحه"</string>
+    <string name="check_wifi_notice">"لا يوجد حاليا اتصال Wifi ، هل تريد متابعة التنزيل"</string>
+    <string name="install">تثبيت الآن</string>
+</resources>
