@@ -14,6 +14,8 @@ import ui.UpdateAppActivity
 import util.GlobalContextProvider
 import util.SPUtil
 import util.Utils
+import android.widget.Toast
+import com.puy.updateapp.R
 
 object UpdateAppUtils {
 
@@ -131,6 +133,10 @@ object UpdateAppUtils {
      * 检查更新
      */
     fun update() {
+        if (DownloadAppUtils.isDownloading) {
+            Toast.makeText( GlobalContextProvider.getGlobalContext(), GlobalContextProvider.getGlobalContext().getString(R.string.toast_download_apk), Toast.LENGTH_SHORT).show()
+            return
+        }
         val keyName = GlobalContextProvider.getGlobalContext().packageName + updateInfo.config.serverVersionName
         // 设置每次显示，设置本次显示及强制更新 每次都显示弹窗
         (updateInfo.config.alwaysShow || updateInfo.config.thisTimeShow || updateInfo.config.force).yes {
@@ -146,6 +152,9 @@ object UpdateAppUtils {
      * 删除已安装 apk
      */
     fun deleteInstalledApk() {
+        if (DownloadAppUtils.isDownloading) {
+            return
+        }
         val apkPath = SPUtil.getString(DownloadAppUtils.KEY_OF_SP_APK_PATH, "")
         log("deleteInstalledApk:$apkPath")
         val appVersionCode = Utils.getAPPVersionCode()

@@ -9,12 +9,20 @@ import listener.OnBtnClickListener
 import model.UiConfig
 import model.UpdateConfig
 import update.UpdateAppUtils
+import android.widget.TextView
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        findViewById<TextView>(R.id.button).setOnClickListener {
+            update()
+        }
+
+    }
+
+    fun update(){
         UpdateAppUtils.getInstance().deleteInstalledApk()
         UpdateAppUtils
             .getInstance()
@@ -46,7 +54,6 @@ class MainActivity : AppCompatActivity() {
                     return false // 事件是否消费，是否需要传递下去。false-会执行原有点击逻辑，true-只执行本次设置的点击逻辑
                 }
             })
-
             .update()
     }
 }
