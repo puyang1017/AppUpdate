@@ -1,8 +1,8 @@
 package update
 
 import extension.log
-import extension.no
-import extension.yes
+import extension.exNo
+import extension.exYes
 import listener.OnBtnClickListener
 import listener.Md5CheckResultListener
 import listener.OnInitUiListener
@@ -139,11 +139,11 @@ object UpdateAppUtils {
         }
         val keyName = GlobalContextProvider.getGlobalContext().packageName + updateInfo.config.serverVersionName
         // 设置每次显示，设置本次显示及强制更新 每次都显示弹窗
-        (updateInfo.config.alwaysShow || updateInfo.config.thisTimeShow || updateInfo.config.force).yes {
+        (updateInfo.config.alwaysShow || updateInfo.config.thisTimeShow || updateInfo.config.force).exYes {
             UpdateAppActivity.launch()
-        }.no {
+        }.exNo {
             val hasShow = SPUtil.getBoolean(keyName, false)
-            (hasShow).no { UpdateAppActivity.launch() }
+            (hasShow).exNo { UpdateAppActivity.launch() }
         }
         SPUtil.putBase(keyName, true)
     }
@@ -161,7 +161,7 @@ object UpdateAppUtils {
         val apkVersionCode = apkPath?.let { Utils.getApkVersionCode(it) }
         log("appVersionCode:$appVersionCode")
         log("apkVersionCode:$apkVersionCode")
-        (apkPath.isNullOrEmpty()).no {
+        (apkPath.isNullOrEmpty()).exNo {
             Utils.deleteFile(apkPath)
         }
     }

@@ -3,15 +3,13 @@ package util
 import android.app.ActivityManager
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Build
 import androidx.core.content.FileProvider
-import android.util.Log
 import extension.log
-import extension.yes
+import extension.exYes
 import update.DownloadAppUtils
 import java.io.File
 
@@ -126,7 +124,7 @@ internal object Utils {
         }
         val file = File(filePath)
         try {
-            (file.exists()).yes {
+            (file.exists()).exYes {
                 file.delete()
                 DownloadAppUtils.isDownloaded = false
                 log("删除成功")

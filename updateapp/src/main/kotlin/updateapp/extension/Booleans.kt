@@ -5,7 +5,7 @@ import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 @OptIn(ExperimentalContracts::class)
-inline fun Boolean?.yes(block: () -> Unit): Boolean? {
+inline fun Boolean?.exYes(block: () -> Unit): Boolean? {
     contract {
         callsInPlace(block, InvocationKind.AT_MOST_ONCE)
     }
@@ -14,7 +14,7 @@ inline fun Boolean?.yes(block: () -> Unit): Boolean? {
 }
 
 @OptIn(ExperimentalContracts::class)
-inline fun Boolean?.no(block: () -> Unit): Boolean? {
+inline fun Boolean?.exNo(block: () -> Unit): Boolean? {
     contract {
         callsInPlace(block, InvocationKind.AT_MOST_ONCE)
     }

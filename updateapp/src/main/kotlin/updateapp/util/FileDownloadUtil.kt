@@ -1,7 +1,7 @@
 package util
 
 import extension.log
-import extension.yes
+import extension.exYes
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -66,7 +66,7 @@ internal object FileDownloadUtil {
                         outputStream.use { output ->
                             input.copyToWithProgress(output!!) {
                                 val pro = (it * 100.0 / total).toInt()
-                                (progress != pro).yes {
+                                (progress != pro).exYes {
                                     GlobalScope.launch(Dispatchers.Main) {
                                         onProgress(it, total.toLong())
                                     }

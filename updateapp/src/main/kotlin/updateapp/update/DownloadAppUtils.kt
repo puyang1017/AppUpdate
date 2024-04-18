@@ -8,10 +8,8 @@ import com.liulishuo.filedownloader.BaseDownloadTask
 import com.liulishuo.filedownloader.FileDownloadLargeFileListener
 import com.liulishuo.filedownloader.FileDownloader
 import extension.log
-import extension.no
-import extension.yes
-import model.UpdateInfo
-import util.*
+import extension.exNo
+import extension.exYes
 import util.FileDownloadUtil
 import util.GlobalContextProvider
 import util.SPUtil
@@ -85,16 +83,16 @@ internal object DownloadAppUtils {
      * App下载APK包，下载完成后安装
      */
     fun download(closeThreeWayDownload:Boolean?) {
-        (Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED).no {
+        (Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED).exNo {
             log("没有SD卡")
             onError.invoke()
             return
         }
 
         var filePath = ""
-        (updateInfo.config.apkSavePath.isNotEmpty()).yes {
+        (updateInfo.config.apkSavePath.isNotEmpty()).exYes {
             filePath = updateInfo.config.apkSavePath
-        }.no {
+        }.exNo {
             val packageName = context.packageName
             filePath = context.externalCacheDir?.path + "/"
         }
@@ -217,9 +215,9 @@ internal object DownloadAppUtils {
         this@DownloadAppUtils.onProgress.invoke(100)
         UpdateAppUtils.downloadListener?.onFinish()
         // 校验md5
-        (updateInfo.config.needCheckMd5).yes {
+        (updateInfo.config.needCheckMd5).exYes {
             checkMd5(context)
-        }.no {
+        }.exNo {
             UpdateAppReceiver.send(context, 100)
         }
     }
@@ -253,10 +251,10 @@ internal object DownloadAppUtils {
         // 校验结果回调
         UpdateAppUtils.md5CheckResultListener?.onResult(localMd5.equals(apkMd5, true))
 
-        (localMd5.equals(apkMd5, true)).yes {
+        (localMd5.equals(apkMd5, true)).exYes {
             log("md5校验成功")
             UpdateAppReceiver.send(context, 100)
-        }.no {
+        }.exNo {
             log("md5校验失败")
         }
     }

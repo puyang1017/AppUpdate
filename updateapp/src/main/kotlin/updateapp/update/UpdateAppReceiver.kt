@@ -9,8 +9,8 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Build
-import extension.no
-import extension.yes
+import extension.exNo
+import extension.exYes
 import util.Utils
 
 /**
@@ -37,13 +37,13 @@ internal class UpdateAppReceiver : BroadcastReceiver() {
 
                 val nm = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-                (progress != -1000).yes {
+                (progress != -1000).exYes {
                     lastProgress = progress
                 }
 
                 // 显示通知栏
                 val notifyId = 1
-                updateConfig.isShowNotification.yes {
+                updateConfig.isShowNotification.exYes {
                     showNotification(context, notifyId, progress, notificationChannel, nm)
                 }
 
@@ -73,7 +73,7 @@ internal class UpdateAppReceiver : BroadcastReceiver() {
         }
 
         // 安装apk
-        DownloadAppUtils.downloadUpdateApkFilePath.isNotEmpty().yes {
+        DownloadAppUtils.downloadUpdateApkFilePath.isNotEmpty().exYes {
             Utils.installApk(context, DownloadAppUtils.downloadUpdateApkFilePath)
         }
     }
@@ -105,10 +105,10 @@ internal class UpdateAppReceiver : BroadcastReceiver() {
 
 
         // 设置通知图标
-        (updateConfig.notifyImgRes > 0).yes {
+        (updateConfig.notifyImgRes > 0).exYes {
             builder.setSmallIcon(updateConfig.notifyImgRes)
             builder.setLargeIcon(BitmapFactory.decodeResource(context.resources, updateConfig.notifyImgRes))
-        }.no {
+        }.exNo {
             builder.setSmallIcon(android.R.mipmap.sym_def_app_icon)
         }
 

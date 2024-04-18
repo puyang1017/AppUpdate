@@ -5,13 +5,11 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.view.MotionEvent
 
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import android.widget.ImageView
@@ -20,9 +18,9 @@ import android.widget.Toast
 import com.puy.updateapp.R
 import constacne.DownLoadBy
 import constacne.UiType
-import extension.no
-import extension.visibleOrGone
-import extension.yes
+import extension.exNo
+import extension.exVisibleOrGone
+import extension.exYes
 import update.DownloadAppUtils
 import update.UpdateAppService
 import update.UpdateAppUtils
@@ -100,32 +98,32 @@ internal class UpdateAppActivity : AppCompatActivity() {
 
         // 取消
         cancelBtn?.setOnClickListener {
-            updateConfig.force.yes {
+            updateConfig.force.exYes {
                 Utils.exitApp()
-            }.no {
+            }.exNo {
                 finish()
             }
         }
 
         // 确定
         sureBtn?.setOnClickListener {
-            DownloadAppUtils.isDownloaded.yes {
+            DownloadAppUtils.isDownloaded.exYes {
                 // 安装apk
-                DownloadAppUtils.downloadUpdateApkFilePath.isNotEmpty().yes {
+                DownloadAppUtils.downloadUpdateApkFilePath.isNotEmpty().exYes {
                     Utils.installApk(this, DownloadAppUtils.downloadUpdateApkFilePath)
                 }
                 return@setOnClickListener
             }
 
-            DownloadAppUtils.isDownloading.yes {
-                (updateConfig.showDownloadingToast).yes {
+            DownloadAppUtils.isDownloading.exYes {
+                (updateConfig.showDownloadingToast).exYes {
                     Toast.makeText(this, uiConfig.downloadingBtnText, Toast.LENGTH_SHORT).show()
                 }
-                (!updateConfig.force).yes {
+                (!updateConfig.force).exYes {
                     finish()
                 }
             }
-            DownloadAppUtils.isDownloading.no {
+            DownloadAppUtils.isDownloading.exNo {
                 if (sureBtn is TextView) {
                     (sureBtn as? TextView)?.text = uiConfig.updateBtnText
                 }
@@ -134,9 +132,9 @@ internal class UpdateAppActivity : AppCompatActivity() {
         }
 
         // 强制更新 不显示取消按钮
-        cancelBtn?.visibleOrGone(!updateConfig.force)
+        cancelBtn?.exVisibleOrGone(!updateConfig.force)
         // 取消按钮与确定按钮中的间隔线
-        findViewById<View>(R.id.view_line)?.visibleOrGone(!updateConfig.force)
+        findViewById<View>(R.id.view_line)?.exVisibleOrGone(!updateConfig.force)
 
         // 外部额外设置 取消 按钮点击事件
         cancelBtn?.setOnTouchListener { v, event ->
@@ -229,7 +227,7 @@ internal class UpdateAppActivity : AppCompatActivity() {
         when (updateConfig.downloadBy) {
             // App下载
             DownLoadBy.APP -> {
-                (updateConfig.checkWifi && !Utils.isWifiConnected(applicationContext)).yes {
+                (updateConfig.checkWifi && !Utils.isWifiConnected(applicationContext)).exYes {
                     // 需要进行WiFi判断
                     AlertDialogUtil.show(
                         this,
@@ -237,7 +235,7 @@ internal class UpdateAppActivity : AppCompatActivity() {
                         onSureClick = {
                             realDownload()
                         })
-                }.no {
+                }.exNo {
                     // 不需要wifi判断，直接下载
                     realDownload()
                 }
@@ -266,9 +264,9 @@ internal class UpdateAppActivity : AppCompatActivity() {
             }
 
             DownloadAppUtils.onProgress = {
-                (it == 100).yes {
+                (it == 100).exYes {
                     (sureBtn as? TextView)?.text = getString(R.string.install)
-                }.no {
+                }.exNo {
                     (sureBtn as? TextView)?.text = "${uiConfig.downloadingBtnText}$it%"
                 }
             }
@@ -276,12 +274,12 @@ internal class UpdateAppActivity : AppCompatActivity() {
 
         DownloadAppUtils.download(uiConfig.closeFileDownload)
 
-        (updateConfig.showDownloadingToast).yes {
+        (updateConfig.showDownloadingToast).exYes {
             Toast.makeText(this, uiConfig.downloadingToastText, Toast.LENGTH_SHORT).show()
         }
 
         // 非强制安装且alwaysShowDownLoadDialog为false时，开始下载后取消弹窗
-        (!updateConfig.force && !updateConfig.alwaysShowDownLoadDialog).yes {
+        (!updateConfig.force && !updateConfig.alwaysShowDownLoadDialog).exYes {
             finish()
         }
     }
@@ -297,10 +295,10 @@ internal class UpdateAppActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
         when (requestCode) {
-            PERMISSION_CODE -> (grantResults[0] == PackageManager.PERMISSION_GRANTED).yes {
+            PERMISSION_CODE -> (grantResults[0] == PackageManager.PERMISSION_GRANTED).exYes {
                 download()
-            }.no {
-                ActivityCompat.shouldShowRequestPermissionRationale(this, permission).no {
+            }.exNo {
+                ActivityCompat.shouldShowRequestPermissionRationale(this, permission).exNo {
                     // 显示无权限弹窗
                     AlertDialogUtil.show(
                         this,
