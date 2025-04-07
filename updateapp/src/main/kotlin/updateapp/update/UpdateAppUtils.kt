@@ -66,6 +66,14 @@ object UpdateAppUtils {
     }
 
     /**
+     * 设置更新按钮
+     */
+    fun updateButton(title: CharSequence): UpdateAppUtils {
+        updateInfo.updateButton = title
+        return this
+    }
+
+    /**
      * 设置更新内容
      */
     fun updateContent(content: CharSequence): UpdateAppUtils {

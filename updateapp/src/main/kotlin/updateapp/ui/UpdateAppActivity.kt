@@ -35,7 +35,7 @@ internal class UpdateAppActivity : AppCompatActivity() {
     private var tvPackageSize: TextView? = null
     private var tvTitle: TextView? = null
     private var tvContent: TextView? = null
-    private var sureBtn: View? = null
+    private var sureBtn: TextView? = null
     private var cancelBtn: View? = null
     private var ivLogo: ImageView? = null
 
@@ -92,6 +92,7 @@ internal class UpdateAppActivity : AppCompatActivity() {
         tvPackageSize?.text = updateInfo.packageSize
         // 更新标题
         tvTitle?.text = updateInfo.updateTitle
+        sureBtn?.text = updateInfo.updateButton
 
         // 更新内容
         tvContent?.text = updateInfo.updateContent

@@ -11,6 +11,7 @@ internal data class UpdateInfo(
     var packageSize: String = "",
     // 更新标题
     var updateTitle: CharSequence = GlobalContextProvider.getGlobalContext().getString(R.string.update_title),
+    var updateButton: CharSequence = GlobalContextProvider.getGlobalContext().getString(R.string.update_now),
     // 更新内容
     var updateContent: CharSequence = GlobalContextProvider.getGlobalContext().getString(R.string.update_content),
     // apk 下载地址
